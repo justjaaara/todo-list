@@ -1,15 +1,12 @@
-import { createContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { tasks as data } from "../data/tasks";
+import { Task } from "../types";
+import { TaskContext } from "./TaskContext";
 
-export const TaskContext = createContext();
-export interface Task {
-  id: number;
-  title: string;
-  description: string;
-}
 
-export function TaskContextProvider(props) {
+export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
+
   function createTask(task: Omit<Task, "id">) {
     setTasks([
       ...tasks,
@@ -20,9 +17,9 @@ export function TaskContextProvider(props) {
       },
     ]);
   }
-  function deleteTask(taskId: number) {
+  const deleteTask = (taskId: number) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
-  }
+  };
   useEffect(() => {
     setTasks(data);
   }, []);
@@ -34,7 +31,7 @@ export function TaskContextProvider(props) {
         createTask,
       }}
     >
-      {props.children}
+      {children}
     </TaskContext.Provider>
   );
-}
+};

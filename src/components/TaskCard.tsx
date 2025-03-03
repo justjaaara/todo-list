@@ -1,4 +1,4 @@
-import { Task } from "../context/TaskContext"; // Importa la interfaz Task desde App.tsx
+import { Task } from "../types"; // Importa la interfaz Task desde App.tsx
 
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
